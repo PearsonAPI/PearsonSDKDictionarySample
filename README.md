@@ -1,4 +1,3 @@
-PPH13
-=====
+PearsonAPI Dictionary Sample
+============================
 
-PanPearsonHackathon 2013 - UnreelFT
