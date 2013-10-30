@@ -20,27 +20,52 @@
     <script src="lib/jquery-1.10.1.js"></script>
     <script src="lib/moustache.js"></script>
     <script src="lib/ICanHaz.js"></script>
-    <script src="https://rawgithub.com/PearsonAPI/Pearson-Api-SDK/master/sdk.js"></script>
+    <script src="https://rawgithub.com/PearsonAPI/Pearson-Api-SDK/develop/sdk.js"></script>
     <script src="lib/app.js"></script>
 
 
     <script id="template_entries" type='text/html'>
-        <div>
-           <div>Showing <span class="badge">{{count}}</span> of <span class="badge">{{total}}</span></div><br/>
-           {{#results}}
-            <div><a class="link_entry" id="{{id}}">{{headword}}</a>
-            {{#part_of_speech}}<span class="label label-primary">{{part_of_speech}}</span>{{/part_of_speech}}
-            {{#homnum}}<span class="badge">{{homnum}}</span>{{/homnum}}
+      <div>
+       <div>Showing <span class="badge">{{count}}</span> of <span class="badge">{{total}}</span></div><br/>
+       <div class="panel-group" id="accordion">
+         {{#results}}
+         <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#{{id}}">
+                <em>{{headword}}</em> </a> {{#homnum}}<sup>{{homnum}}</sup>{{/homnum}} {{#part_of_speech}}<span class="label label-primary">{{part_of_speech}}</span>{{/part_of_speech}}
+                <span style="float:right" class="label label-warning">{{datasets.0}}</span>
+              </h4>
             </div>
-            <div id="{{id}}"></div>
-            {{/results}}
+            <div id="{{id}}" class="panel-collapse collapse">
+              <div class="panel-body">
+              </div>
+            </div>
+          </div>
+          {{/results}} 
         </div>
-    </script>
+      </script>
   
+    <script id="pronunciations" type='text/html'>
+      {{#pronunciations}}
+        {{#ipa}}ipa: {{ipa}} {{/ipa}}
+        {{#kk}}kk: {{kk}} {{/kk}}
+        {{#audio}} <a href="http://api.pearson.com{{.url}">{{.type}}</a> {{/audio}}
+      {{/pronunciations}}
+    </script>
+
+    <script id="sense" type='text/html'>
+      {{#definition}}Definition: {{definition}} {{/definition}}
+    </script>
+    
+
     <script id="template_entry" type='text/html'>
-        <div class="entry">
-            Ta da !!
-        </div>
+        {{#audio}}<a href="http://api.pearson.com{{url}}"><span class="glyphicon glyphicon-volume-up"></span></a>effect{{/audio}}
+        {{#gramatical_info}}<em>{{gramatical_info}}</em>{{/gramatical_info}}
+        {{>pronunciations}}
+        {{#senses}}
+          {{>sense}}
+        {{/senses}}
     </script>
   </head>
 
