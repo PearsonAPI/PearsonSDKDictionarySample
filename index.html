@@ -20,10 +20,10 @@
     <script src="lib/jquery-1.10.1.js"></script>
     <script src="lib/moustache.js"></script>
     <script src="lib/ICanHaz.js"></script>
-    <script src="https://rawgithub.com/PearsonAPI/Pearson-Api-SDK/develop/sdk.js"></script>
+    <script src="https://rawgithub.com/PearsonAPI/Pearson-Api-SDK/develop/pearson_sdk.js"></script>
     <script src="lib/app.js"></script>
 
-
+    <!-- Template for displaying the list of results found -->
     <script id="template_entries" type='text/html'>
       <div>
        <div>Showing <span class="badge">{{count}}</span> of <span class="badge">{{total}}</span></div><br/>
@@ -46,6 +46,7 @@
         </div>
       </script>
   
+    <!-- Template for displaying the 'pronunciations' for a given entry -->
     <script id="pronunciations" type='text/html'>
       {{#pronunciations}}
         {{#ipa}}ipa: {{ipa}} {{/ipa}}
@@ -54,11 +55,12 @@
       {{/pronunciations}}
     </script>
 
+    <!-- Template for displaying the 'senses' for a given entry -->
     <script id="sense" type='text/html'>
       {{#definition}}Definition: {{definition}} {{/definition}}
     </script>
     
-
+    <!-- Template for displaying an 'entry'. Note this includes other templates -->
     <script id="template_entry" type='text/html'>
         {{#audio}}<a href="http://api.pearson.com{{url}}"><span class="glyphicon glyphicon-volume-up"></span></a>effect{{/audio}}
         {{#gramatical_info}}<em>{{gramatical_info}}</em>{{/gramatical_info}}
@@ -70,10 +72,30 @@
   </head>
 
   <body>
-    
+    <script>
+      // Have a 'global' search here. Don't do this in production !!
+      var search = { };
+    </script>
+
     <div class="container">
+    <h3>PearsonAPI Dictionaries sample application</h3>
 
     <form id="search_form" action="" class="navbar-form navbar-right">
+    <div class="btn-group" data-toggle="buttons">
+      <label class="btn btn-info">
+        <input type="checkbox" value="ldoce5"> LDOCE
+      </label>
+      <label class="btn btn-info">
+        <input type="checkbox" value="lasde"> LASDE
+      </label>
+      <label class="btn btn-info">
+        <input type="checkbox" value="ldec"> LDEC
+      </label>
+      <label class="btn btn-info">
+        <input type="checkbox" value="wordwise"> WordWise
+      </label>
+    </div>
+    <br/>
     <div class="input-group">
        <input id="searchbox" type="Search" placeholder="Search..." class="form-control" />
        <div class="input-group-btn">
@@ -82,14 +104,7 @@
            </button>
        </div>
     </div>
-      <p>Dictionaries<select class="selectpicker" multiple data-selected-text-format="values">
-        <option>ldoce5</option>
-        <option>lasde</option>
-        <option>ldec</option>
-        <option>wordwise</option>
-      </select>
-      </p>
-    </form>
+  </form>
 
         <div id="entries"></div> <!-- make this hidden by default -->        
     </div>

@@ -6,16 +6,18 @@ $(function () {
   $('#search_form').on('submit', function(e) { 
       e.preventDefault();  
       
-      // set the 'global' search criteria
-      window.search = { search: $("#search_form #searchbox").val() };
-      
-      executeSearch(0,25);
+      var query = $("#search_form #searchbox").val();
+      console.log(query)
+ 
+      var api = sdk.dictionaries();    
+      api.addEndpoint('entries');
+      api.addParams({limit: 25, offset:0});
+      api.addSearch(query);
+      executeSearch(api);
   });
 
- var executeSearch = function (offset,limit) {
-    var dict = sdk.dictionaries();    
-    var entries = dict.entries();
-    var data =  entries.search(search,offset,limit)
+ var executeSearch = function (api) {
+    var data = $.fetch(api);
     
     var t = ich.template_entries(data.raw());
     $('#entries').html(t);
