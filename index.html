@@ -34,7 +34,7 @@
           <div class="panel-heading">
             <h4 class="panel-title">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#{{id}}">
-                <em>{{headword}}</em> </a> {{#homnum}}<sup>{{homnum}}</sup>{{/homnum}} {{#part_of_speech}}<span class="label label-primary">{{part_of_speech}}</span>{{/part_of_speech}}
+                <em>{{headword}}</em> </a> {{#if homnum}}<sup>{{homnum}}</sup>{{/if}} {{#if part_of_speech}}<span class="label label-primary">{{part_of_speech}}</span>{{/if}}
                 <span style="float:right" class="label label-warning">{{datasets.[0]}}</span>
               </h4>
             </div>
@@ -49,9 +49,11 @@
   
     <!-- Template for displaying the 'pronunciations' for a given entry -->
     <script id="partial_prons" class="partial" type='text/html'>
+        <p>
+        {{#if ipa}}(ipa) {{ipa}}{{/if}}
+        {{#if kk}}(kk) {{kk}}{{/if}}
         {{#audio}}<a href="http://api.pearson.com{{url}}"><span class="glyphicon glyphicon-volume-up"></span></a>{{/audio}}
-        {{#if ipa}}<p>ipa: {{ipa}}</p> {{/if}}
-        {{#if kk}}<p>kk: {{kk}} </p>{{/if}}
+        </p>
     </script>
 
     <!-- Template for displaying the 'senses' for a given entry -->
@@ -66,26 +68,46 @@
       {{/each}}
       </ol>
       {{/if}}
+      {{#if examples}}
+      <ol type="i">
+      {{#examples}}
+        <li><em style="font-size:90%">{{text}}</em>
+          {{#audio}}<a href="http://api.pearson.com{{url}}"><span class="glyphicon glyphicon-volume-up"></span></a>{{/audio}}
+        </li>
+      {{/examples}}
+      </ol>
+      {{/if}}
       </li>
     </script>
 
         
     <!-- Template for displaying an 'entry'. Note this includes other templates -->
     <script id="template_entry"  type='text/html'>
-        <h4>{{headword}} </h4>
+        <h4>{{headword}} {{#if gramatical_info}}<span style="font-size:90%" class="label label-primary">{{gramatical_info.type}}</span>{{/if}}</h4>
         {{#audio}}<a href="http://api.pearson.com{{url}}"><span class="glyphicon glyphicon-volume-up"></span></a>{{/audio}}
         {{#if images}}
           <img style="float:right" src="http://api.pearson.com{{images.0.url}}"/>
         {{/if}}
-        {{#if gramatical_info}}[{{gramatical_info.type}}]{{/if}}
-        {{#each pronunciations}}
+        {{#if pronunciations}}
+        <h4><span class="label label-default">pronunciation</span></h4>
+        {{#pronunciations}}
           {{>partial_prons}}
-        {{/each}}
+        {{/pronunciations}}
+        {{/if}}
+        <h4><span class="label label-default">senses</span></h4>
         <ol>
         {{#each senses}}
           {{> partial_sense}}
         {{/each}}
         </ol>
+        {{#if examples}}
+        <h4><span class="label label-default">examples</span></h4>
+          <ol>
+          {{#examples}}
+            <li>{{text}}</li>
+          {{/examples}}
+          </ol>
+        {{/if}}
     </script>
   </head>
 
