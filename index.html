@@ -18,8 +18,8 @@
     <link href="css/launch.css" rel="stylesheet">
 
     <script src="lib/jquery-1.10.1.js"></script>
-    <script src="lib/moustache.js"></script>
-    <script src="lib/ICanHaz.js"></script>
+    <script src="lib/handlebars.js"></script>
+    <script src="lib/ICanHandlebarz.js"></script>
     <!--<script src="https://rawgithub.com/PearsonAPI/Pearson-Api-SDK/develop/pearson_sdk.js"></script>-->
     <script src="lib/pearson_sdk.js"></script>
     
@@ -28,7 +28,6 @@
     <!-- Template for displaying the list of results found -->
     <script id="template_entries" type='text/html'>
       <div>
-       <div>Showing <span class="badge">{{count}}</span> of <span class="badge">{{total}}</span></div><br/>
        <div class="panel-group" id="accordion">
          {{#results}}
          <div class="panel panel-default">
@@ -36,7 +35,7 @@
             <h4 class="panel-title">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#{{id}}">
                 <em>{{headword}}</em> </a> {{#homnum}}<sup>{{homnum}}</sup>{{/homnum}} {{#part_of_speech}}<span class="label label-primary">{{part_of_speech}}</span>{{/part_of_speech}}
-                <span style="float:right" class="label label-warning">{{datasets.0}}</span>
+                <span style="float:right" class="label label-warning">{{datasets.[0]}}</span>
               </h4>
             </div>
             <div id="{{id}}" class="panel-collapse collapse">
@@ -49,36 +48,48 @@
       </script>
   
     <!-- Template for displaying the 'pronunciations' for a given entry -->
-    <script id="pronunciations" type='text/html'>
-      {{#pronunciations}}
-        {{#ipa}}ipa: {{ipa}} {{/ipa}}
-        {{#kk}}kk: {{kk}} {{/kk}}
-        {{#audio}} <a href="http://api.pearson.com{{.url}">{{.type}}</a> {{/audio}}
-      {{/pronunciations}}
+    <script id="partial_prons" class="partial" type='text/html'>
+        {{#audio}}<a href="http://api.pearson.com{{url}}"><span class="glyphicon glyphicon-volume-up"></span></a>{{/audio}}
+        {{#if ipa}}<p>ipa: {{ipa}}</p> {{/if}}
+        {{#if kk}}<p>kk: {{kk}} </p>{{/if}}
     </script>
 
     <!-- Template for displaying the 'senses' for a given entry -->
-    <script id="sense" type='text/html'>
-      {{#definition}}Definition: {{definition}} {{/definition}}
+    <script id="partial_sense" class="partial" type='text/html'>
+      <li>
+      {{#if definition}}<p>{{definition}} </p>{{/if}}
+      {{#if translation}}<p>{{translation}} </p>{{/if}}
+      {{#if subsenses}}
+      <ol type="a">
+      {{#each subsenses}}
+        {{> partial_sense}}
+      {{/each}}
+      </ol>
+      {{/if}}
+      </li>
     </script>
-    
+
+        
     <!-- Template for displaying an 'entry'. Note this includes other templates -->
-    <script id="template_entry" type='text/html'>
-        {{#audio}}<a href="http://api.pearson.com{{url}}"><span class="glyphicon glyphicon-volume-up"></span></a>effect{{/audio}}
-        {{#gramatical_info}}<em>{{gramatical_info}}</em>{{/gramatical_info}}
-        {{>pronunciations}}
-        {{#senses}}
-          {{>sense}}
-        {{/senses}}
+    <script id="template_entry"  type='text/html'>
+        <h4>{{headword}} </h4>
+        {{#audio}}<a href="http://api.pearson.com{{url}}"><span class="glyphicon glyphicon-volume-up"></span></a>{{/audio}}
+        {{#if images}}
+          <img style="float:right" src="http://api.pearson.com{{images.0.url}}"/>
+        {{/if}}
+        {{#if gramatical_info}}[{{gramatical_info.type}}]{{/if}}
+        {{#each pronunciations}}
+          {{>partial_prons}}
+        {{/each}}
+        <ol>
+        {{#each senses}}
+          {{> partial_sense}}
+        {{/each}}
+        </ol>
     </script>
   </head>
 
   <body>
-    <script>
-      // Have a 'global' search here. Don't do this in production !!
-      var search = { };
-    </script>
-
     <div class="container">
     <h3>PearsonAPI Dictionaries sample application</h3>
 
@@ -106,9 +117,10 @@
            </button>
        </div>
     </div>
+    <div id="pagination"></div>
   </form>
-
-        <div id="entries"></div> <!-- make this hidden by default -->        
+    
+    <div id="entries"></div> <!-- make this hidden by default -->        
     </div>
 
 
