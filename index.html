@@ -114,6 +114,16 @@
     <h3>PearsonAPI Dictionaries sample application</h3>
 
     <form id="search_form" action="" class="navbar-form navbar-right">
+    
+    <div class="input-group">
+       <input id="searchbox" type="Search" placeholder="headword..." class="form-control" />
+       <div class="input-group-btn">
+           <button class="btn btn-info">
+           <span class="glyphicon glyphicon-search"></span>
+           </button>
+       </div>
+    </div>
+    <br/>
     <div id="datasets" class="btn-group" data-toggle="buttons">
       <label class="btn btn-info">
         <input type="checkbox" value="ldoce5"> LDOCE5
@@ -128,15 +138,7 @@
         <input type="checkbox" value="wordwise"> WordWise
       </label>
     </div>
-    <br/><br/>
-    <div class="input-group">
-       <input id="searchbox" type="Search" placeholder="headword..." class="form-control" />
-       <div class="input-group-btn">
-           <button class="btn btn-info">
-           <span class="glyphicon glyphicon-search"></span>
-           </button>
-       </div>
-    </div>
+    <br/>
     <div id="pagination"></div>
   </form>
     
