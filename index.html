@@ -34,7 +34,7 @@
           <div class="panel-heading">
             <h4 class="panel-title">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#{{id}}">
-                <h3>{{headword}}</h3> </a> {{#if homnum}}<sup>{{homnum}}</sup>{{/if}} {{#if part_of_speech}}<span class="label label-primary">{{part_of_speech}}</span>{{/if}}
+                <em>{{headword}}</em> </a> {{#if homnum}}<sup>{{homnum}}</sup>{{/if}} {{#if part_of_speech}}<span class="label label-primary">{{part_of_speech}}</span>{{/if}}
                 <span style="float:right" class="label label-warning">{{datasets.[0]}}</span>
               </h4>
             </div>
@@ -52,7 +52,7 @@
         <p>
         {{#if ipa}}(ipa) {{ipa}}{{/if}}
         {{#if kk}}(kk) {{kk}}{{/if}}
-        {{#audio}}<a href="http://api.pearson.com{{url}}"><span class="glyphicon glyphicon-volume-up"></span></a>{{/audio}}
+         {{#audio}}<a class="audio"><span class="glyphicon glyphicon-volume-up"><audio><source src="http://api.pearson.com{{url}}"></audio></span></a>{{/audio}}
         </p>
     </script>
 
@@ -72,7 +72,7 @@
       <ol type="i">
       {{#examples}}
         <li><em style="font-size:90%">{{text}}</em>
-          {{#audio}}<a href="http://api.pearson.com{{url}}"><span class="glyphicon glyphicon-volume-up"></span></a>{{/audio}}
+           {{#audio}}<a class="audio"><span class="glyphicon glyphicon-volume-up"><audio><source src="http://api.pearson.com{{url}}"></audio></span></a>{{/audio}}
         </li>
       {{/examples}}
       </ol>
@@ -83,8 +83,8 @@
         
     <!-- Template for displaying an 'entry'. Note this includes other templates -->
     <script id="template_entry"  type='text/html'>
-        <h4>{{headword}} {{#if gramatical_info}}<span style="font-size:90%" class="label label-primary">{{gramatical_info.type}}</span>{{/if}}</h4>
-        {{#audio}}<a href="http://api.pearson.com{{url}}"><span class="glyphicon glyphicon-volume-up"></span></a>{{/audio}}
+        <h4>{{headword}} {{#if gramatical_info}}<span style="font-size:75%">[{{gramatical_info.type}}]</span>{{/if}}</h4>
+        {{#audio}}<a class="audio"><span class="glyphicon glyphicon-volume-up"><audio><source src="http://api.pearson.com{{url}}"></audio></span></a>{{/audio}}
         {{#if images}}
           <img style="float:right" src="http://api.pearson.com{{images.0.url}}"/>
         {{/if}}
