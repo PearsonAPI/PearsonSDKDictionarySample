@@ -13,4 +13,4 @@ The sample app makes use of _handlebars_ as a simple template language. The _ICa
 
 ### Running the Sample
 
-Edit the ```lib\app.js``` file to add your production key into the source (if you have/need one). Then simply serve the file ```index.html``` through a web server.
+Edit the ```lib\app.js``` file to add your production key into the source (if you have/need one). Then simply serve the file ```index.html``` through a web server, or load directly into a browser.
