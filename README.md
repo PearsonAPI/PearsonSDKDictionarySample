@@ -9,6 +9,8 @@ This is a simple sample, and not a full-blown application. It demonstrates the s
 
 The sample utilizes a simple search form providing a 'headword' search on entries in the dictionaries. This can be modified in the ```lib/app.js``` file to either change or extend the search to work against other search criteria.
 
+By default, the sample does not use an apikey, so the only entries available are those from the 'sandbox' environment (entries begining in with letters 'a' through 'c'). To view all entries, you need to have a production apikey (available from [developer.pearson.com](http://developer.pearson.com)), and then add your key in the ```lib/app.js``` file.
+
 The sample app makes use of _handlebars_ as a simple template language. The _ICanHandlbars_ package is used to to allow templates to be defined as a single page application. We use _bootstrap_ to provide the page components, and _jQuery_ to orchestrate. And of course, the Pearson API SDK :-)
 
 ### Running the Sample
